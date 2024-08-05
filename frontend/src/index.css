@@ -1,0 +1,7 @@
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body{
+    background: rgb(15 23 42 );
+}
