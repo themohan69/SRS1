@@ -13,6 +13,10 @@ const teacherSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  standard: {
+    type: String,
+    require,
+  },
 });
 
 const Teacher = mongoose.model("Teacher", teacherSchema);

@@ -5,6 +5,7 @@ const PORT = 8080;
 
 const connectDB = require("./config/db");
 const teacherRoute = require("./routes/authRoute");
+const studentRoute = require("./routes/studentRoute");
 
 app.use(express.json());
 app.use(cors());
@@ -13,9 +14,10 @@ connectDB();
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("Hello Boy!");
+  res.send("<h1>" + "Hello Boy!" + "</h1>");
 });
 
 app.use("/api/teacher", teacherRoute);
+app.use("/api", studentRoute);
 
 app.listen(PORT, () => console.log(`Server running on port 8080`));

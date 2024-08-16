@@ -4,13 +4,18 @@ const jwt = require("jsonwebtoken");
 const auth_token = "abcd";
 
 const registerTeacher = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, standard } = req.body;
   try {
+    const teacher = await Teacher.findOne({ email });
+    if (teacher) {
+      return res.status(401).json({ message: "Teacher already registered" });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newTeacher = new Teacher({
       name,
       email,
       password: hashedPassword,
+      standard,
     });
     await newTeacher.save();
     res.status(201).json({ message: "Teacher registered successfully" });
@@ -26,20 +31,20 @@ const loginTeacher = async (req, res) => {
 
     // find teacher
     if (!teacher) {
-      res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
 
     // check the password
-    const isMatch = bcrypt.compare(password, teacher.password);
+    const isMatch = await bcrypt.compare(password, teacher.password);
     if (!isMatch) {
-      res.status(404).json({ error: "Invalid credentials" });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     // generating jwt token
     const token = jwt.sign({ id: teacher._id }, auth_token, {
       expiresIn: "1h",
     });
-    res.status(200).json(token);
+    res.status(200).json({ token });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
@@ -51,8 +56,8 @@ const teacherProfile = async (req, res) => {
     return res.status(401).json({ message: "Please login" });
   }
   try {
-    const decode = jwt.verify(token, "abcd123");
-    const user = await Teacher.findOne(decode.id);
+    const decode = jwt.verify(token, auth_token);
+    const user = await Teacher.findById(decode.id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
