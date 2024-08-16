@@ -52,8 +52,8 @@ const App = () => {
         },
         {
           path: "student/add/:year",
-          element: <AddStudents/>
-        }
+          element: <AddStudents />,
+        },
       ],
     },
   ]);

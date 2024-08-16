@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const AddStudents = () => {
   const { year } = useParams();
-  const [rollno, setRollno] = useState("");
+  const [rollNo, setRollno] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [dob, setDob] = useState("");
@@ -26,7 +26,7 @@ const AddStudents = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     studentData = {
-      rollno,
+      rollNo,
       name,
       number,
       dob,

@@ -45,6 +45,7 @@ const addStudent = (model) => async (req, res) => {
   const { rollNo, name, number, dob, standard } = req.body;
 
   if (!rollNo || !name || !number || !dob || !standard) {
+    console.log(rollNo + " " + name + " " + number + " " + dob + " " + standard)
     return res.status(400).json({ message: "Please fill all the information" });
   }
 

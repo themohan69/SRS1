@@ -37,7 +37,7 @@ const Students = () => {
   } else if (year === "sy") {
     standard = "SY_IT";
   } else if (year === "ty") {
-    standard = "FY_IT";
+    standard = "TY_IT";
   }
 
   if (loading) {
